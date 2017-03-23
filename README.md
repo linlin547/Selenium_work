@@ -1,6 +1,6 @@
 
 
-浏览器SSL
+浏览器SSL处理：
 
 IE的解决方案，对ie浏览器而言，需要添加Desired Capabilities的acceptSslCerts选项为True，代码如下：
 
