@@ -1,0 +1,5 @@
+1.有时可能会不断的提示保存密码，那么在浏览器中设置一下，之后可以在启动驱动时，设置默一下参数即可。</br>
+例：
+Mac chrome:
+self.option.add_argument(r'--user-data-dir=/Users/用户位置/Library/Application Support/Google/Chrome/Default')
+self.driver = webdriver.Chrome(executable_path=WebDriver_Utils.Chrome_path,chrome_options=self.option)
