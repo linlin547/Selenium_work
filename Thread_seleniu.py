@@ -21,7 +21,6 @@ def test_baidu_search(browser, url):
     driver.find_element_by_id("kw").clear()
     driver.find_element_by_id("kw").send_keys("测试")    
     driver.find_element_by_id("su").click()
-    time.sleep(3)    
     driver.quit()    
     
 if __name__ == "__main__":    
