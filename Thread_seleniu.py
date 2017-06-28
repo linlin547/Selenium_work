@@ -11,7 +11,7 @@ class Web_info:
         return d
     def ge(self,dr):
         dr.get("http://www.baidu.com")
-        time.sleep(10)
+        time.sleep(2)
         dr.quit()
 if __name__ == '__main__':
     wi = Web_info()
