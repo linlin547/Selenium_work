@@ -1,38 +1,36 @@
-#-*- coding:utf-8 -*-
-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from selenium import webdriver
-from time,sys
-from threading import Thread
-
-reload(sys)
-sys.setdefaultencoding("utf-8")
-
-def test_baidu_search(browser, url):
-    driver = None
-    if browser == "firefox":
-        driver = webdriver.Firefox() 
-    elif browser == "chrome":
-        driver = webdriver.Chrome() 
-    
-    if driver == None:
-        exit()    
-        
-    driver.get(url)    
-    driver.find_element_by_id("kw").clear()
-    driver.find_element_by_id("kw").send_keys("测试")    
-    driver.find_element_by_id("su").click()
-    driver.quit()    
-    
-if __name__ == "__main__":    
-    data = {        
-        "firefox":"http://www.baidu.com", 
-        "chrome":"http://www.baidu.com"
-        }   
-    threads = []  
-    
-    for bro, url in data.items():  
-       t = Thread(target=test_baidu_search,args=(bro,url))
-       threads.append(t)  
-    
-    for thr in threads:
-        thr.start()
+import time
+import threading
+class Web_info:
+    def grid(self):
+        d = {'http://127.0.0.1:5559/wd/hub': 'firefox',
+             'http://127.0.0.1:5555/wd/hub': 'chrome',
+             }
+        return d
+    def ge(self,dr):
+        dr.get("http://www.baidu.com")
+        time.sleep(10)
+        dr.quit()
+if __name__ == '__main__':
+    wi = Web_info()
+    lis_driver = []
+    lis_thread = []
+    for host, browser in wi.grid().items():
+        driver = webdriver.Remote(
+            command_executor=host,
+            desired_capabilities={
+                'platform': 'ANY',
+                'browserName': browser,
+                'version': '',
+                'javascriptEnabled': True
+            }
+        )
+        lis_driver.append(driver)
+    for o in lis_driver:
+        th = threading.Thread(target=wi.ge,args=(driver,))
+        th.start()
+        lis_thread.append(th)
+    for n in lis_thread:
+        n.join()
