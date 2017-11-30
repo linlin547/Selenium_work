@@ -1,0 +1,40 @@
+import pytest
+from selenium import webdriver
+import time,threading
+def init_driver():
+    chrome_drver = webdriver.Chrome(executable_path="/Users/finup/Downloads/chromedriver")
+    firefox_driver = webdriver.Firefox(executable_path="/Users/finup/Downloads/geckodriver")
+    return [(chrome_drver),(firefox_driver)]
+
+def thread_start(dr_list,func,*args):
+    # param example: (a,b,c....)
+    t_l = []
+    for i in dr_list:
+        param = [o for o in args]
+        param.insert(0,i)
+        th = threading.Thread(target=func, args=tuple(param))
+        th.start()
+        t_l.append(th)
+    for o in t_l:
+        o.join()
+
+class Test_ABC(object):
+    def setup_class(self):
+        self.dr_lis = init_driver()
+        
+    @pytest.mark.parametrize('url,data', [("http://www.baidu.com","hahahah"),("http://www.baidu.com","asdasda")])
+    def test_a(self, url, data):
+
+        thread_start(self.dr_lis,self.searchx,url,data)
+
+    def searchx(self,chrome_driver,url,data):
+
+        chrome_driver.get(url)
+        print chrome_driver.name
+        print chrome_driver.title
+        chrome_driver.find_element_by_id("kw").send_keys(data)
+        time.sleep(5)
+        assert 1
+    def teardown_class(self):
+        for i in self.dr_lis:
+            i.close()
