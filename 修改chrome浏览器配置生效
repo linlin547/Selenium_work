@@ -5,9 +5,7 @@ self.option.add_argument(r'--user-data-dir=/Users/用户位置/Library/Applicati
 self.driver = webdriver.Chrome(executable_path=WebDriver_Utils.Chrome_path,chrome_options=self.option)
 2.修改浏览器的User-Agent来伪装你的浏览器访问手机m站
 option.add_argument('--user-agent=iphone')
-3.去掉chrome正收到自动测试软件控制
-chrome_options = webdriver.ChromeOptions()
-# 取消chrome正受到自动化软件测试展示
+3.去掉chrome正收到自动测试软件控制 取消chrome正受到自动化软件测试展示
 options = webdriver.ChromeOptions()
 options.add_argument('--disable-blink-features=AutomationControlled')
 options.add_experimental_option('excludeSwitches', ['enable-automation'])
